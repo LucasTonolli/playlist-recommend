@@ -37,4 +37,18 @@ class SpotifyService
 
         return $response;
     }
+
+    public function getTracks(string $playlistId)
+    {
+        $response = $this->request(
+            'get',
+            '/playlists/' . $playlistId . '/tracks',
+            [
+                'market' => 'BR',
+                'fields' => 'items(track(name,href))'
+            ]
+        );
+
+        return $response;
+    }
 }
