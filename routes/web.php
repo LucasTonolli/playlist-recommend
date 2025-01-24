@@ -9,6 +9,6 @@ Route::get('/', function () {
 
 Route::resource('playlist', PlaylistController::class)
     ->parameters(['playlist' => 'playlist:spotify_id'])
-    ->except(['create', 'edit', 'update']);
+    ->except(['create', 'edit', 'update', 'show']);
 
 Route::get('playlists/buscar', [PlaylistController::class, 'search']);

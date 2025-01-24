@@ -15,7 +15,7 @@ class PlaylistController extends Controller
     public function index()
     {
         $playlists = $this->playlistService->get();
-        return response()->json($playlists);
+        return view('playlist.index', compact('playlists'));
     }
 
     /**
@@ -82,6 +82,6 @@ class PlaylistController extends Controller
         $term = $request->input('term');
         $playlists = $this->playlistService->getPlaylists($term);
 
-        return response()->json($playlists);
+        return view('playlist.search', compact('playlists'));
     }
 }

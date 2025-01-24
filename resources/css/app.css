@@ -1,3 +1,13 @@
+@import "remixicon/fonts/remixicon.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.add-playlist {
+	right: 0em;
+	top: 0.95em;
+}
+
+@media (min-width: 1024px) {
+}
