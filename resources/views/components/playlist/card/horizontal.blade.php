@@ -6,7 +6,7 @@
 
     <!-- Conteúdo -->
     <div class="w-7/12 p-4 flex flex-col justify-between relative">
-
+            @if(!$playlist->id)
             <form action="{{ route('playlist.store')}}" method="post" class="absolute add-playlist">
                 @csrf
                 <input type="hidden" name="name" value="{{$playlist->name}}">
@@ -15,6 +15,7 @@
                 <input type="hidden" name="spotify_id" value="{{$playlist->spotify_id}}">
                 <button type="submit" class="inline-block px-4 md:text-2xl sm:text-lg text-black hover:text-[#0d6e30] transition duration-300"><i class="ri-add-circle-line"></i></button>
             </form>
+            @endif
 
       <h2 class="md:text-xl sm:text-sm font-semibold text-gray-800">{{$playlist->name}}</h2>
       <p class="text-sm text-gray-600">Total de músicas: {{ $playlist->music_quantity}}</p>
