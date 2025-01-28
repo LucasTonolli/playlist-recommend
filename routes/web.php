@@ -1,11 +1,10 @@
 <?php
 
 use App\Http\Controllers\PlaylistController;
+use App\Models\Playlist;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('page.home');
-});
+Route::get('/', [PlaylistController::class, 'home']);
 
 Route::resource('playlist', PlaylistController::class)
     ->parameters(['playlist' => 'playlist:spotify_id'])

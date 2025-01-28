@@ -18,6 +18,12 @@ class PlaylistController extends Controller
         return view('playlist.index', compact('playlists'));
     }
 
+    public function home()
+    {
+        $playlist = $this->playlistService->getRandom();
+        return view('page.home', ['playlist' => $playlist]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

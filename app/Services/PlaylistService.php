@@ -54,6 +54,13 @@ class PlaylistService
         return $this->normalizePlaylists(Playlist::all());
     }
 
+    public function getRandom()
+    {
+        $playlist = Playlist::inRandomOrder()->first();
+        $playlist = $this->normalizePlaylist($playlist);
+        return $playlist;
+    }
+
     private function getTracks(string $playlistId)
     {
         $tracks = $this->spotifyService->getTracks($playlistId);
