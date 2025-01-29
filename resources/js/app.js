@@ -9,6 +9,8 @@ Alpine.start();
 document.addEventListener("DOMContentLoaded", function () {
 	const background = document.getElementById("background-animation");
 
+	if (!background) return;
+
 	for (let i = 0; i < 50; i++) {
 		const bubble = document.createElement("div");
 		bubble.className = `absolute w-4 h-4 bg-blue-600 rounded-full opacity-50`;

@@ -24,7 +24,7 @@ class PlaylistPostRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'spotify_id' => 'required|string|max:255',
-            'image' => 'required|url:https',
+            'image_url' => 'required|url:https',
             'music_quantity' => 'required|integer'
         ];
     }

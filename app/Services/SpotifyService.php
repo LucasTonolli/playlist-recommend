@@ -27,12 +27,13 @@ class SpotifyService
         return $response;
     }
 
-    public function getPlaylists(string $term)
+    public function getPlaylists(string $term, $page = 1)
     {
         $response = $this->request('get', '/search', [
             'q' => $term,
             'type' => 'playlist',
-            'market' => 'BR'
+            'market' => 'BR',
+            'offset' => ($page - 1) * 10
         ]);
 
         return $response;

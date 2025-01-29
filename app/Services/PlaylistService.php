@@ -15,16 +15,19 @@ class PlaylistService
         $this->spotifyService = $spotifyService;
     }
 
-    public function getPlaylists(string $term)
+    public function getPlaylists(string $term, $page = 1)
     {
 
-        $response = $this->spotifyService->getPlaylists($term);
+        $response = $this->spotifyService->getPlaylists($term, $page);
 
         $items    = $response->object()->playlists->items;
         $items    = $this->normalizePlaylists($items);
-        $pagination = [
+        $pagination = (object)[
             'next' => $response->object()->playlists->next,
+            'current_page' => $page,
             'previous' => $response->object()->playlists->previous,
+            'is_last_page' => $page === (int) $response->object()->playlists->total / 10,
+            'page_qty'  => round($response->object()->playlists->total / 10),
             'total' => $response->object()->playlists->total
         ];
 
@@ -42,16 +45,17 @@ class PlaylistService
         return $playlist;
     }
 
-    public function get(?string $id = null)
+    public function get(?string $term = null)
     {
-        if ($id) {
-            $playlist = Playlist::where('spotify_id', $id)->firstOrFail();
-            $playlist = $this->normalizePlaylist($playlist);
-            $playlist->setAttribute('musics', $this->getTracks($playlist->spotify_id));
-            return $playlist;
+        if ($term) {
+            $playlists = Playlist::where('name', 'like', '%' . $term . '%')
+                ->paginate(4);
+        } else {
+            $playlists = Playlist::paginate(4);
         }
 
-        return $this->normalizePlaylists(Playlist::all());
+        $playlists->setCollection(collect($this->normalizePlaylists($playlists->items())));
+        return $playlists;
     }
 
     public function getRandom()
@@ -59,12 +63,6 @@ class PlaylistService
         $playlist = Playlist::inRandomOrder()->first();
         $playlist = $this->normalizePlaylist($playlist);
         return $playlist;
-    }
-
-    private function getTracks(string $playlistId)
-    {
-        $tracks = $this->spotifyService->getTracks($playlistId);
-        return $tracks->object()->items;
     }
 
 

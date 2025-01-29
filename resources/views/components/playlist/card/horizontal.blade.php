@@ -1,12 +1,16 @@
-<div class="mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-3">
-  <div class="flex flex-row">
+<?php
+
+use App\Models\Playlist; ?>
+
+<div class="bg-white shadow-lg rounded-lg overflow-hidden my-3">
+  <div class="flex flex-row h-full">
     <div class="w-5/12">
-      <img src="{{ $playlist->image_url}}" alt="Imagem do card" class="w-full h-auto object-cover">
+      <img src="{{ $playlist->image_url}}" alt="Imagem do card" class="w-full h-full object-cover">
     </div>
 
     <!-- Conteúdo -->
     <div class="w-7/12 p-4 flex flex-col justify-between relative">
-            @if(!$playlist->id)
+            @if(!Playlist::where('spotify_id', $playlist->spotify_id)->first())
             <form action="{{ route('playlist.store')}}" method="post" class="absolute add-playlist">
                 @csrf
                 <input type="hidden" name="name" value="{{$playlist->name}}">
@@ -17,8 +21,8 @@
             </form>
             @endif
 
-      <h2 class="md:text-xl sm:text-sm font-semibold text-gray-800">{{$playlist->name}}</h2>
-      <p class="text-sm text-gray-600">Total de músicas: {{ $playlist->music_quantity}}</p>
+      <h2 class="text-left md:text-xl sm:text-sm font-semibold text-gray-800">{{$playlist->name}}</h2>
+      <p class=" text-left text-sm text-gray-600">Total de músicas: {{ $playlist->music_quantity}}</p>
 
       <!-- Botões -->
       <div class="flex space-x-4 mt-4 justify-between">

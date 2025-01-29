@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{$title}}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,18 +15,18 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endif
   </head>
-<body class="font-sans antialiased bg-gray-200 dark:text-white/50">
+<body class="font-sans antialiased bg-gray-200 dark:text-white/50" x-data="{ scrolled: false }">
 
   <header
-        class="fixed top-0 left-0 w-full bg-transparent text-white transition-colors duration-300 z-50"
+        class="fixed top-0 left-0 w-full  text-white transition-colors duration-300 z-50"
         :class="{ 'bg-black': scrolled }"
-        x-data="{ scrolled: false, menuOpen: false }"
-        @scroll.window="scrolled = (window.scrollY > 50)"
+        x-data="{ menuOpen: false }"
+         @scroll.window="scrolled = window.scrollY > 10"
     >
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
             <!-- Logo -->
             <div class="text-lg font-bold">
-                <a href="/" class="hover:text-gray-300">MyApp</a>
+                <a href="{{ route('home')}}" class="hover:text-gray-300">Recomendação de playlist</a>
             </div>
 
             <!-- Botão de Toggle do Menu -->
@@ -37,21 +37,19 @@
             </button>
 
             <!-- Menu Responsivo -->
-            <div x-show="menuOpen" class="absolute top-16 left-0 w-full bg-gray-800 lg:bg-transparent lg:w-auto lg:flex lg:space-x-6 lg:items-center">
+            <div x-show="menuOpen" class="absolute top-14 left-0 w-full bg-gray-800 lg:bg-transparent lg:w-auto lg:flex lg:space-x-6 lg:items-center">
                 <nav class="lg:hidden lg:space-x-6 lg:items-center">
-                    <a href="#home" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Home</a>
-                    <a href="#about" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">About</a>
-                    <a href="#services" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Services</a>
-                    <a href="#contact" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Contact</a>
+                    <a href="{{ route('spotify.search')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Pesquisar</a>
+                    <a href="{{ route('playlist.index')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Playlist adicionadas</a>
+                    <a href="{{ route('contact')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Contato</a>
                 </nav>
             </div>
 
             <!-- Menu Desktop -->
             <nav class="hidden lg:flex lg:space-x-6 lg:items-center">
-                <a href="#home" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Home</a>
-                <a href="#about" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">About</a>
-                <a href="#services" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Services</a>
-                <a href="#contact" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Contact</a>
+                <a href="{{ route('spotify.search')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Pesquisar</a>
+                <a href="{{ route('playlist.index')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Playlist adicionadas</a>
+                <a href="{{ route('contact')}}" class="block py-2 px-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-gray-300">Contato</a>
             </nav>
         </div>
     </header>

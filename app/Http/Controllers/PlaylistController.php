@@ -14,14 +14,17 @@ class PlaylistController extends Controller
     public function __construct(private PlaylistService $playlistService) {}
     public function index()
     {
-        $playlists = $this->playlistService->get();
-        return view('playlist.index', compact('playlists'));
+        $term = filter_input(INPUT_GET, 'term');
+        $title = 'Playlists adicionadas';
+        $playlists = $this->playlistService->get($term);
+        return view('playlist.index', compact('playlists', 'title'));
     }
 
     public function home()
     {
+        $title = 'Página inicial';
         $playlist = $this->playlistService->getRandom();
-        return view('page.home', ['playlist' => $playlist]);
+        return view('page.home', compact('title', 'playlist'));
     }
 
     /**
@@ -38,25 +41,22 @@ class PlaylistController extends Controller
     public function store(PlaylistPostRequest $request)
     {
         try {
+
             $playlist = $this->playlistService->createPlaylist($request->validated());
-            return response()->json($playlist);
+
+            return back()
+                ->with('success', 'Playlist adicionada com sucesso!')
+                ->with('playlist', $playlist);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
+            return back()
+                ->with('error', $e->getMessage());
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        try {
-            $playlist = $this->playlistService->get($id);
-            return response()->json($playlist);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -86,8 +86,12 @@ class PlaylistController extends Controller
     {
 
         $term = $request->input('term');
-        $playlists = $this->playlistService->getPlaylists($term);
-
-        return view('playlist.search', compact('playlists'));
+        $page = $request->input('page') ?? 1;
+        $playlists = $term ? $this->playlistService->getPlaylists($term, $page) : (object)[
+            'items' => [],
+            'pagination' => []
+        ];
+        $title = 'Buscar playlist';
+        return view('playlist.search', compact('playlists', 'title'));
     }
 }
