@@ -61,7 +61,7 @@ class PlaylistService
     public function getRandom()
     {
         $playlist = Playlist::inRandomOrder()->first();
-        $playlist = $this->normalizePlaylist($playlist);
+        $playlist = $playlist ? $this->normalizePlaylist($playlist) : null;
         return $playlist;
     }
 

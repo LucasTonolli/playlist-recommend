@@ -13,13 +13,23 @@
         <p class="text-lg md:text-xl mb-8 animate-fade-in opacity-0 animate-delay-1">
             Explore as melhores sugestões feitas especialmente para você.
         </p>
+        @if($playlist)
         <a
             href="{{ $playlist->spotify_web }}"
             target="_blank"
             class="bg-purple-900 opacity-0 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 animate-fade-in animate-delay-2"
         >
-            Ver Recomendação
+            Ver recomendação
         </a>
+        @else
+         <a
+            href="{{ route('spotify.search') }}"
+            target="_blank"
+            class="bg-purple-900 opacity-0 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 animate-fade-in animate-delay-2"
+        >
+            Fazer recomendação
+        </a>
+        @endif
     </div>
 </section>
 
