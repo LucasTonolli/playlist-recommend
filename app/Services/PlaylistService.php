@@ -49,9 +49,9 @@ class PlaylistService
     {
         if ($term) {
             $playlists = Playlist::where('name', 'like', '%' . $term . '%')
-                ->paginate(4);
+                ->paginate(10);
         } else {
-            $playlists = Playlist::paginate(4);
+            $playlists = Playlist::paginate(10);
         }
 
         $playlists->setCollection(collect($this->normalizePlaylists($playlists->items())));
