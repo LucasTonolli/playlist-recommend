@@ -9,7 +9,7 @@ use App\Models\Playlist; ?>
     </div>
 
     <!-- Conteúdo -->
-    <div class="w-7/12 py-6 px-9 flex flex-col justify-between relative">
+    <div class="w-7/12 py-4 px-9 flex flex-col justify-between relative">
             @if(!Playlist::where('spotify_id', $playlist->spotify_id)->first())
             <form action="{{ route('playlist.store')}}" method="post" class="absolute add-playlist">
                 @csrf
